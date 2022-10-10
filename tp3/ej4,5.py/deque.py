@@ -24,7 +24,7 @@ class Deque(DequeAbstract):
          """
 
         if self.is_empty():
-            return "LinkedStack()"
+            return "Deque()"
 
         resultado = ""
         actual = self._head
@@ -33,7 +33,7 @@ class Deque(DequeAbstract):
             actual = actual.next
 
         resultado = resultado[:len(resultado)-2]
-        return f"LinkedStack({resultado})"
+        return f"Deque({resultado})"
     
     def is_empty(self) -> bool:
         """Indica si la estructura está vacía.
@@ -78,14 +78,13 @@ class Deque(DequeAbstract):
         estructura.
         """
 
-        nuevo_nodo = ListNode(elem, None)
+        nuevo_nodo = ListNode(elem, self._head)
         
         if self.is_empty():
             self._head = nuevo_nodo
             self._tail = nuevo_nodo
         else:
-            self._head.next = nuevo_nodo
-            self._head = self._head.next
+            self._head = nuevo_nodo
             
         self._size += 1
     
@@ -117,7 +116,7 @@ class Deque(DequeAbstract):
         
         self._head = self._head.next
         self._size -= 1
-    
+        
     def delete_last(self) -> None:
         """Quita el elemento ubicado al final de la estructura.
         Raises:
@@ -127,11 +126,17 @@ class Deque(DequeAbstract):
         if self.is_empty():
             raise Exception("Pila vacía. Operación no soportada")
         
-        self._tail = self._tail.next
-        self._size -= 1
+        # # self._tail = self._tail.next
+        # # self._size -= 1
+        # self._tail.element=None
+        # self._tail=self._tail.next
+        # self._size-=1    
+        nuevo_tail=self._head
 
+        while nuevo_tail.next.next:
+            nuevo_tail=nuevo_tail.next
         
-        
-        
-        
-  
+        self._tail=nuevo_tail
+        self._tail.next=None
+        self._size-=1
+    
