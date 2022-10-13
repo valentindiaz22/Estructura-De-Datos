@@ -8,4 +8,7 @@ class ListNode:
         self.element = element
         self.next : Union[ListNode, None] = next
         self.prev : Union[ListNode, None] = prev
+        
+    def __str__(self):
+        return f"[{self.element}]"
 

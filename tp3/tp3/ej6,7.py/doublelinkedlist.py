@@ -37,10 +37,13 @@ class DoubleLinkedList(DoubleLinkedListAbstract):
             aux=0
             while head!=None:
                 aux+=1
+                
                 if key==aux:
                     aux2=head.element
+                
                 head=head.next
-            return aux2.__str__()
+                
+            return aux2
 
     
     def __setitem__(self, key: int, value: Any) -> None:
@@ -78,17 +81,24 @@ class DoubleLinkedList(DoubleLinkedListAbstract):
         
         if key>self._size or key<0:
             raise Exception ("Indice fuera de rango")
-        else:
-                pass
-            # head=self._head
-            # aux=0
-            # while head!=None:
-            #     aux+=1
-            #     if key==aux:
-            #         head.prev.next=head.next
-            #         head.next.prev=head.prev
-            #     head=head.next
-            # self._size-=1
+                    
+        previo = None
+        actual=self._head
+        aux=0
+        while actual:               
+            if key==aux:
+                if previo: # Si existe el previo
+                    previo.next = actual.next
+                    actual.prev = previo
+                else: # Si no
+                    self._head = actual.next
+                    actual.prev = None
+            
+            previo = actual
+            actual = actual.next
+            aux += 1
+            
+        self._size-=1
             
 
     def __iter__(self) -> Iterator[Any]:
